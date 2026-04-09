@@ -1,78 +1,177 @@
 # Portable Tablet Mod for Data Center
 
-A MelonLoader mod for the game **Data Center** that allows you to use the computer interface from anywhere in the game world.
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Version 1.0.0">
+  <img src="https://img.shields.io/badge/game-Data%20Center-green.svg" alt="For Data Center">
+  <img src="https://img.shields.io/badge/melonloader-0.6.x-orange.svg" alt="MelonLoader 0.6.x">
+  <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
+</p>
 
-## Features
+A **MelonLoader mod** for the game [Data Center](https://store.steampowered.com/app/3069460/Data_Center/) that allows you to use the computer interface from anywhere in the game world. No more walking back to the computer station to order equipment or check your finances!
 
-- **Open tablet anywhere** - Press `T` to access the computer UI from any location
-- **Full functionality** - Shop, Balance Sheet, Asset Management, Hiring, Network Map all work
-- **Proper cursor support** - Mouse cursor appears automatically when using the tablet
-- **Quick close** - Press `ESC` to close the tablet
+---
 
-## Requirements
+## 🎮 Features
 
-- [MelonLoader](https://melonwiki.xyz/) 0.6.x or later
-- Data Center (Steam)
+- 📱 **Portable Computer** - Access the full OS interface from anywhere in the data center
+- 🛒 **Shop on the Go** - Order servers, switches, and equipment while walking around
+- 📊 **Quick Finance Check** - View Balance Sheet instantly
+- 👥 **Hire Anywhere** - Recruit technicians without returning to the office
+- 🌐 **Network Map** - Check your network topology from any location
+- 🖱️ **Full Cursor Support** - Proper mouse cursor appears automatically
+- ⚡ **Quick Toggle** - Press `T` to open, `ESC` to close
 
-## Installation
+---
 
-1. Download `PortableTabletMod.dll` from the [Releases](../../releases) page
-2. Copy `PortableTabletMod.dll` to `Data Center/Mods/`
+## 📥 Installation
+
+### Prerequisites
+- **Data Center** (Steam version)
+- **MelonLoader** 0.6.x or later ([Download here](https://melonwiki.xyz/))
+
+### Quick Install
+
+1. Download the latest `PortableTabletMod.dll` from [Releases](../../releases)
+2. Copy the DLL file to your game's Mods folder:
+   ```
+   C:\Program Files (x86)\Steam\steamapps\common\Data Center\Mods\
+   ```
 3. Launch the game through MelonLoader
 
-## Building from Source
+### Verification
+If installed correctly, you'll see this message in the MelonLoader console:
+```
+[PortableTablet] Portable Tablet Mod v1.0.0 loaded!
+```
+
+---
+
+## ⌨️ Controls
+
+| Key | Action |
+|-----|--------|
+| **T** | Open/Close tablet toggle |
+| **ESC** | Close tablet (alternative) |
+
+---
+
+## 🔧 Building from Source
 
 ### Prerequisites
 - [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-- MelonLoader installed in your Data Center game directory
+- Data Center installed with MelonLoader
 
-### Build Steps
+### Build Instructions
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/PortableTabletMod.git
 cd PortableTabletMod
 
-# Build the mod
+# Build in Release mode
 dotnet build -c Release
 
-# The mod DLL will be in bin/Release/net6.0/
-# Copy it to your game:
-cp bin/Release/net6.0/PortableTabletMod.dll \
-   "C:/Program Files (x86)/Steam/steamapps/common/Data Center/Mods/"
+# Copy to game (adjust path as needed)
+copy "bin\Release\net6.0\PortableTabletMod.dll" \
+     "C:\Program Files (x86)\Steam\steamapps\common\Data Center\Mods\"
 ```
 
-## Usage
+---
 
-| Key | Action |
-|-----|--------|
-| **T** | Open/Close tablet |
-| **ESC** | Close tablet (when open) |
+## 🧰 Troubleshooting
 
-## How It Works
+### Mod doesn't load
+- Ensure MelonLoader is properly installed
+- Check that you're using the correct game version
+- Verify the DLL is in the `Data Center/Mods/` folder, not a subfolder
 
-The mod hooks into the `ComputerShop` component and calls `InteractOnClick()`, the same method used when clicking on the computer in-game. This ensures proper initialization including cursor visibility.
+### Tablet opens but no cursor
+- This is usually resolved by the mod automatically
+- If issues persist, try clicking on the computer normally first, then using the mod
 
-## Project Structure
+### Game crashes when opening tablet
+- Make sure you're using the latest mod version
+- Check that other mods aren't conflicting
+- Disable other mods temporarily to test
+
+### Key T doesn't work
+- Check if another mod is using the T key
+- You can modify the key in the mod source code and rebuild
+
+---
+
+## 🤝 Compatibility
+
+| Component | Version | Status |
+|-----------|---------|--------|
+| Game | Data Center (Steam) | ✅ Fully compatible |
+| MelonLoader | 0.6.x | ✅ Fully compatible |
+| DHCPSwitches | Any | ✅ Compatible |
+| RackBuilderMod | Any | ✅ Compatible |
+| TexasSizedTrolley | Any | ✅ Compatible |
+| DataCenter-MoreModules | Any | ✅ Compatible |
+
+---
+
+## 📁 Project Structure
 
 ```
 PortableTabletMod/
-├── PortableTabletMod.cs       # Main mod code
-├── PortableTabletMod.csproj     # Project file
-├── .gitignore                   # Git ignore rules
-└── README.md                    # This file
+├── PortableTabletMod.cs          # Main mod source
+├── PortableTabletMod.csproj      # Project configuration
+├── .gitignore                      # Git ignore rules
+├── LICENSE                         # MIT License
+└── README.md                       # This file
 ```
 
-## Compatibility
+---
 
-- **Game:** Data Center
-- **MelonLoader:** 0.6.x or later
-- **Works with:** Other mods (tested with DHCPSwitches, RackBuilderMod, TexasSizedTrolley, DataCenter-MoreModules)
+## 📝 How It Works
 
-## License
+The mod uses **Harmony** patches to hook into the game's `ComputerShop` class. When you press `T`, it calls `InteractOnClick()` - the same method the game uses when you physically click on the computer in-game.
 
-MIT License - feel free to use, modify, and distribute.
+This approach ensures:
+- ✅ Full UI functionality
+- ✅ Proper cursor initialization
+- ✅ No conflicts with game systems
+- ✅ Works with save games
 
-## Credits
+---
 
-Created for Data Center
+## 📜 Version History
+
+### v1.0.0 (Current)
+- Initial release
+- Portable tablet functionality (T key)
+- Proper cursor support via InteractOnClick()
+- Support for all ComputerShop screens
+- Harmony-based ComputerShop detection
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Credits
+
+- Created for **Data Center**
+- Uses [MelonLoader](https://melonwiki.xyz/) framework
+- Built with [Harmony](https://github.com/pardeike/Harmony) patching library
+
+---
+
+## 💡 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+
+---
+
+<p align="center">
+  Made with ❤️ for Data Center players
+</p>
