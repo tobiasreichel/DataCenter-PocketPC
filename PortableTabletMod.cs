@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Reflection;
 using Il2CppInterop.Runtime;
+using System.IO;
+using System.Text.Json;
 
-[assembly: MelonInfo(typeof(PortableTabletMod.PortableTabletMod), "PortableTablet", "1.1.0", "PortableTablet")]
+[assembly: MelonInfo(typeof(PortableTabletMod.PortableTabletMod), "PocketPC", "1.2.0", "PocketPC")]
 [assembly: MelonGame("Data Center")]
 
 namespace PortableTabletMod
 {
+    public class ConfigData
+    {
+        public string ToggleKey { get; set; } = "T";
+    }
+
     public class PortableTabletMod : MelonMod
     {
         private static Key _tabletKey = Key.T;
@@ -20,27 +27,84 @@ namespace PortableTabletMod
         private static float _searchTimer = 0f;
         private static float _searchInterval = 1f;
 
-        // Config entries
-        private static MelonPreferences_Category _configCategory;
-        private static MelonPreferences_Entry<string> _toggleKeyEntry;
+        // Config paths
+        private static string _configDir;
+        private static string _configPath;
+        private static ConfigData _config;
 
         public override void OnInitializeMelon()
         {
-            // Setup config
-            _configCategory = MelonPreferences.CreateCategory("PortableTablet");
-            _toggleKeyEntry = _configCategory.CreateEntry("ToggleKey", "T", "Hotkey to toggle the tablet (default: T)");
+            // Setup config directory in user home: ~/Mods/PocketPC/
+            string userHome = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
+            _configDir = Path.Combine(userHome, "Mods", "PocketPC");
+            _configPath = Path.Combine(_configDir, "config.json");
+
+            // Load or create config
+            LoadConfig();
 
             // Parse the key
             ParseToggleKey();
 
-            LoggerInstance.Msg($"Portable Tablet Mod v1.1.0 loaded!");
-            LoggerInstance.Msg($"Press {_toggleKeyEntry.Value} to open the tablet anywhere.");
-            LoggerInstance.Msg($"Edit UserData/MelonPreferences.cfg to change the hotkey.");
+            LoggerInstance.Msg($"PocketPC Mod v1.2.0 loaded!");
+            LoggerInstance.Msg($"Press {_config.ToggleKey} to open the tablet anywhere.");
+            LoggerInstance.Msg($"Config file: {_configPath}");
+        }
+
+        private void LoadConfig()
+        {
+            try
+            {
+                // Create directory if it doesn't exist
+                if (!Directory.Exists(_configDir))
+                {
+                    Directory.CreateDirectory(_configDir);
+                    LoggerInstance.Msg($"Created config directory: {_configDir}");
+                }
+
+                // Load existing config or create default
+                if (File.Exists(_configPath))
+                {
+                    string json = File.ReadAllText(_configPath);
+                    _config = JsonSerializer.Deserialize<ConfigData>(json);
+                    if (_config == null)
+                    {
+                        _config = new ConfigData();
+                        SaveConfig();
+                    }
+                    LoggerInstance.Msg("Config loaded successfully.");
+                }
+                else
+                {
+                    // Create default config
+                    _config = new ConfigData();
+                    SaveConfig();
+                    LoggerInstance.Msg($"Created default config at: {_configPath}");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LoggerInstance.Warning($"Config error: {ex.Message}. Using defaults.");
+                _config = new ConfigData();
+            }
+        }
+
+        private void SaveConfig()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(_config, options);
+                File.WriteAllText(_configPath, json);
+            }
+            catch (System.Exception ex)
+            {
+                LoggerInstance.Warning($"Failed to save config: {ex.Message}");
+            }
         }
 
         private void ParseToggleKey()
         {
-            string keyString = _toggleKeyEntry.Value.Trim().ToUpper();
+            string keyString = _config.ToggleKey.Trim().ToUpper();
 
             if (System.Enum.TryParse<Key>(keyString, out Key parsedKey))
             {
@@ -186,6 +250,8 @@ namespace PortableTabletMod
             _computerShopInstance = instance;
             _computerShopFound = true;
         }
+
+        public static ConfigData Config { get { return _config; } }
     }
 
     // Harmony patch to capture ComputerShop instance when it spawns
