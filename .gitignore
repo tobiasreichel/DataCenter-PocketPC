@@ -1,0 +1,35 @@
+# Build outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.suo
+*.cache
+*.vscode/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# MelonLoader specific (don't commit game references)
+MelonLoader/
+Il2CppAssemblies/
+UnityEngine*.dll
+Assembly-CSharp*.dll
+0Harmony.dll
+
+# But do commit the built mod for releases
+!PortableTabletMod.dll
