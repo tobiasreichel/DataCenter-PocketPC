@@ -7,17 +7,17 @@ using Il2CppInterop.Runtime;
 using System.IO;
 using System.Text.Json;
 
-[assembly: MelonInfo(typeof(PortableTabletMod.PortableTabletMod), "PocketPC", "1.2.0", "PocketPC")]
+[assembly: MelonInfo(typeof(PocketPC.PocketPC), "PocketPC", "1.2.0", "PocketPC")]
 [assembly: MelonGame("Data Center")]
 
-namespace PortableTabletMod
+namespace PocketPC
 {
     public class ConfigData
     {
         public string ToggleKey { get; set; } = "T";
     }
 
-    public class PortableTabletMod : MelonMod
+    public class PocketPC : MelonMod
     {
         private static Key _tabletKey = Key.T;
         private static bool _isTabletOpen = false;
@@ -262,7 +262,7 @@ namespace PortableTabletMod
         {
             if (__instance != null)
             {
-                PortableTabletMod.SetComputerShop(__instance);
+                PocketPC.SetComputerShop(__instance);
             }
         }
     }

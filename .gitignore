@@ -32,4 +32,4 @@ Assembly-CSharp*.dll
 0Harmony.dll
 
 # But do commit the built mod for releases
-!PortableTabletMod.dll
+!PocketPC.dll

@@ -1,4 +1,4 @@
-# Portable Tablet Mod for Data Center
+# PocketPC for Data Center
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.2.0-blue.svg" alt="Version 1.2.0">
@@ -31,7 +31,7 @@ A **MelonLoader mod** for the game [Data Center](https://store.steampowered.com/
 
 ### Quick Install
 
-1. Download the latest `PortableTabletMod.dll` from [Releases](../../releases)
+1. Download the latest `PocketPC.dll` from [Releases](../../releases)
 2. Copy the DLL file to your game's Mods folder:
    ```
    C:\Program Files (x86)\Steam\steamapps\common\Data Center\Mods\
@@ -89,14 +89,14 @@ The config file is created automatically on first launch if it doesn't exist.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/PortableTabletMod.git
-cd PortableTabletMod
+git clone https://github.com/yourusername/PocketPC.git
+cd PocketPC
 
 # Build in Release mode
 dotnet build -c Release
 
 # Copy to game (adjust path as needed)
-copy "bin\Release\net6.0\PortableTabletMod.dll" \
+copy "bin\Release\net6.0\PocketPC.dll" \
      "C:\Program Files (x86)\Steam\steamapps\common\Data Center\Mods\"
 ```
 
@@ -140,9 +140,9 @@ copy "bin\Release\net6.0\PortableTabletMod.dll" \
 ## 📁 Project Structure
 
 ```
-PortableTabletMod/
-├── PortableTabletMod.cs          # Main mod source
-├── PortableTabletMod.csproj      # Project configuration
+PocketPC/
+├── PocketPC.cs          # Main mod source
+├── PocketPC.csproj      # Project configuration
 ├── .gitignore                      # Git ignore rules
 ├── LICENSE                         # MIT License
 └── README.md                       # This file
