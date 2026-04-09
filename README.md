@@ -31,8 +31,8 @@ A **MelonLoader mod** for the game [Data Center](https://store.steampowered.com/
 
 ### Quick Install
 
-1. Download the latest `PocketPC.dll` from [Releases](../../releases)
-2. Copy the DLL file to your game's Mods folder:
+1. Download the latest `PocketPC-V*.zip` from [Releases](../../releases)
+2. Copy the DLL and Config to your game's Mods folder:
    ```
    C:\Program Files (x86)\Steam\steamapps\common\Data Center\Mods\
    ```
@@ -41,7 +41,7 @@ A **MelonLoader mod** for the game [Data Center](https://store.steampowered.com/
 ### Verification
 If installed correctly, you'll see this message in the MelonLoader console:
 ```
-[PortableTablet] Portable Tablet Mod v1.0.0 loaded!
+[PortableTablet] Portable Tablet Mod v*.*.* loaded!
 ```
 
 ---
