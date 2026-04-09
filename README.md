@@ -50,8 +50,25 @@ If installed correctly, you'll see this message in the MelonLoader console:
 
 | Key | Action |
 |-----|--------|
-| **T** | Open/Close tablet toggle |
+| **T** (default) | Open/Close tablet toggle |
 | **ESC** | Close tablet (alternative) |
+
+### Changing the Hotkey
+
+The hotkey can be customized via the MelonLoader config file:
+
+1. Open `Data Center/UserData/MelonPreferences.cfg` in a text editor
+2. Find the `[PortableTablet]` section
+3. Change `ToggleKey` to your desired key (e.g., `Tab`, `P`, `Insert`, etc.)
+4. Save and restart the game
+
+**Example:**
+```ini
+[PortableTablet]
+ToggleKey = Tab
+```
+
+Valid keys are any [Unity Input System Key names](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.Key.html) (case insensitive).
 
 ---
 
@@ -140,7 +157,12 @@ This approach ensures:
 
 ## 📜 Version History
 
-### v1.0.0 (Current)
+### v1.1.0 (Current)
+- Added configurable hotkey via MelonPreferences
+- Press T (or your configured key) to open tablet
+- Config is saved in `UserData/MelonPreferences.cfg`
+
+### v1.0.0
 - Initial release
 - Portable tablet functionality (T key)
 - Proper cursor support via InteractOnClick()

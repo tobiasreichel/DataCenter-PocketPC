@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 using System.Reflection;
 using Il2CppInterop.Runtime;
 
-[assembly: MelonInfo(typeof(PortableTabletMod.PortableTabletMod), "PortableTablet", "1.0.0", "PortableTablet")]
+[assembly: MelonInfo(typeof(PortableTabletMod.PortableTabletMod), "PortableTablet", "1.1.0", "PortableTablet")]
 [assembly: MelonGame("Data Center")]
 
 namespace PortableTabletMod
 {
     public class PortableTabletMod : MelonMod
     {
-        private Key _tabletKey = Key.T;
+        private static Key _tabletKey = Key.T;
         private static bool _isTabletOpen = false;
         private static Il2Cpp.ComputerShop _computerShopInstance;
         private static bool _inputSystemReady = false;
@@ -20,10 +20,37 @@ namespace PortableTabletMod
         private static float _searchTimer = 0f;
         private static float _searchInterval = 1f;
 
+        // Config entries
+        private static MelonPreferences_Category _configCategory;
+        private static MelonPreferences_Entry<string> _toggleKeyEntry;
+
         public override void OnInitializeMelon()
         {
-            LoggerInstance.Msg("Portable Tablet Mod v1.0.0 loaded!");
-            LoggerInstance.Msg("Press T to open the tablet anywhere.");
+            // Setup config
+            _configCategory = MelonPreferences.CreateCategory("PortableTablet");
+            _toggleKeyEntry = _configCategory.CreateEntry("ToggleKey", "T", "Hotkey to toggle the tablet (default: T)");
+
+            // Parse the key
+            ParseToggleKey();
+
+            LoggerInstance.Msg($"Portable Tablet Mod v1.1.0 loaded!");
+            LoggerInstance.Msg($"Press {_toggleKeyEntry.Value} to open the tablet anywhere.");
+            LoggerInstance.Msg($"Edit UserData/MelonPreferences.cfg to change the hotkey.");
+        }
+
+        private void ParseToggleKey()
+        {
+            string keyString = _toggleKeyEntry.Value.Trim().ToUpper();
+
+            if (System.Enum.TryParse<Key>(keyString, out Key parsedKey))
+            {
+                _tabletKey = parsedKey;
+            }
+            else
+            {
+                LoggerInstance.Warning($"Invalid key '{keyString}' in config. Using default 'T'.");
+                _tabletKey = Key.T;
+            }
         }
 
         public override void OnUpdate()
